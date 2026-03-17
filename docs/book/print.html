@@ -1,0 +1,875 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>molconv</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Molecular structure conversion library">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-a3c85a9d.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-5b1e16ba.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">molconv</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/petridecus/molconv" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="molconv"><a class="header" href="#molconv">molconv</a></h1>
+<p><strong>molconv</strong> is a Rust library for parsing, transforming, and serializing
+molecular structure data. It provides a unified type system for working
+with proteins, nucleic acids, ligands, and other biomolecules across
+multiple file formats.</p>
+<h2 id="what-it-does"><a class="header" href="#what-it-does">What it does</a></h2>
+<ul>
+<li><strong>Parse</strong> PDB, mmCIF, BinaryCIF, DCD trajectory, and MRC density files</li>
+<li><strong>Convert</strong> between formats with a canonical intermediate representation</li>
+<li><strong>Transform</strong> coordinates: alignment, superposition, filtering, interpolation</li>
+<li><strong>Analyze</strong> secondary structure (DSSP), bond inference, validation</li>
+<li><strong>Extract</strong> render-ready data (backbone chains, sidechain atoms, bonds)</li>
+<li><strong>Serialize</strong> to a compact binary format for IPC and storage</li>
+</ul>
+<h2 id="key-types"><a class="header" href="#key-types">Key types</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Coords</code></td><td>Flat atom arrays: positions, names, chains, residues, elements</td></tr>
+<tr><td><code>MoleculeEntity</code></td><td>A classified molecule (protein, ligand, etc.) with its <code>Coords</code></td></tr>
+<tr><td><code>RenderCoords</code></td><td>Backbone chains + sidechain atoms, ready for GPU consumption</td></tr>
+<tr><td><code>SSType</code></td><td>Secondary structure classification (helix, sheet, coil, turn)</td></tr>
+<tr><td><code>DensityMap</code></td><td>3D electron density grid from MRC/CCP4 files</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="design-principles"><a class="header" href="#design-principles">Design principles</a></h2>
+<ol>
+<li><strong>Zero-copy where possible.</strong> Parsing produces owned data, but
+transforms operate on slices and iterators.</li>
+<li><strong>Format-agnostic core.</strong> <code>Coords</code> and <code>MoleculeEntity</code> carry no
+format-specific metadata — adapters handle the translation.</li>
+<li><strong>Embeddable.</strong> No filesystem, network, or GPU dependencies in the
+core. Optional <code>python</code> feature adds PyO3 bindings.</li>
+</ol>
+<h2 id="crate-structure"><a class="header" href="#crate-structure">Crate structure</a></h2>
+<pre><code>molconv/
+├── types/              Core data structures (Coords, Entity, Density)
+├── adapters/           Format I/O (PDB, mmCIF, BinaryCIF, DCD, MRC, AtomWorks)
+├── cif/                CIF/STAR parser and typed extractors
+├── ops/                Coordinate transforms, validation, bond inference
+├── render/             Render-ready data extraction
+├── secondary_structure/ DSSP and SS type classification
+├── ffi/                C-compatible FFI layer
+└── python/             PyO3 bindings (feature-gated)
+</code></pre>
+<h2 id="api-documentation"><a class="header" href="#api-documentation">API documentation</a></h2>
+<p>For the full Rust API reference, run:</p>
+<pre><code class="language-bash">cargo doc --open --document-private-items
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h1>
+<h2 id="parse-a-pdb-file"><a class="header" href="#parse-a-pdb-file">Parse a PDB file</a></h2>
+<pre><code class="language-rust ignore">use molconv::adapters::pdb::structure_file_to_coords;
+use molconv::types::entity::split_into_entities;
+
+// Parse any PDB or mmCIF file
+let coords = structure_file_to_coords("1ubq.pdb")?;
+
+// Split into classified entities (protein, ligand, water, etc.)
+let entities = split_into_entities(&amp;coords);
+for entity in &amp;entities {
+    println!(
+        "Entity {}: {:?} ({} atoms)",
+        entity.entity_id,
+        entity.molecule_type,
+        entity.atom_count(),
+    );
+}</code></pre>
+<h2 id="extract-backbone-chains"><a class="header" href="#extract-backbone-chains">Extract backbone chains</a></h2>
+<pre><code class="language-rust ignore">use molconv::ops::transform::{protein_only, extract_backbone_chains};
+
+let protein_coords = protein_only(&amp;coords);
+let chains = extract_backbone_chains(&amp;protein_coords);
+for (i, chain) in chains.iter().enumerate() {
+    println!("Chain {}: {} CA positions", i, chain.len());
+}</code></pre>
+<h2 id="compute-secondary-structure"><a class="header" href="#compute-secondary-structure">Compute secondary structure</a></h2>
+<pre><code class="language-rust ignore">use molconv::secondary_structure::dssp::from_entity;
+
+let ss_types = from_entity(&amp;entities[0]);
+for (i, ss) in ss_types.iter().enumerate() {
+    println!("Residue {}: {:?}", i, ss);
+}</code></pre>
+<h2 id="convert-between-formats"><a class="header" href="#convert-between-formats">Convert between formats</a></h2>
+<pre><code class="language-rust ignore">use molconv::adapters::pdb::{pdb_to_coords, coords_to_pdb};
+use molconv::types::coords::{serialize, deserialize};
+
+// PDB string → binary COORDS
+let coords_bytes = pdb_to_coords(pdb_string)?;
+
+// Binary COORDS → Coords struct
+let coords = deserialize(&amp;coords_bytes)?;
+
+// Coords struct → PDB string
+let pdb_out = coords_to_pdb(&amp;coords_bytes)?;</code></pre>
+<h2 id="python-usage"><a class="header" href="#python-usage">Python usage</a></h2>
+<pre><code class="language-python">import molconv
+
+# PDB round-trip
+coords_bytes = molconv.pdb_to_coords(pdb_string)
+pdb_back = molconv.coords_to_pdb(coords_bytes)
+
+# Entity-aware AtomArray conversion (for ML pipelines)
+atom_array = molconv.entities_to_atom_array(assembly_bytes)
+assembly_bytes = molconv.atom_array_to_entities(atom_array)
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<h2 id="as-a-rust-dependency"><a class="header" href="#as-a-rust-dependency">As a Rust dependency</a></h2>
+<p>Add to your <code>Cargo.toml</code>:</p>
+<pre><code class="language-toml">[dependencies]
+molconv = { git = "https://github.com/petridecus/molconv" }
+</code></pre>
+<h2 id="as-a-python-package"><a class="header" href="#as-a-python-package">As a Python package</a></h2>
+<p>molconv provides optional Python bindings via PyO3/maturin.</p>
+<pre><code class="language-bash"># Build and install the wheel
+cd crates/molconv
+maturin develop --release --features python
+
+# Verify
+python -c "import molconv; print('OK')"
+</code></pre>
+<h2 id="feature-flags"><a class="header" href="#feature-flags">Feature flags</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Feature</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>python</code></td><td>Enable PyO3 bindings (requires <code>pyo3</code>, <code>numpy</code>)</td></tr>
+</tbody>
+</table>
+</div>
+<p>The default build includes no optional features — it’s a pure Rust
+library with no native dependencies beyond <code>glam</code> and <code>pdbtbx</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="architecture-overview"><a class="header" href="#architecture-overview">Architecture Overview</a></h1>
+<p>molconv is organized as a layered conversion pipeline. Raw file bytes
+enter through adapters, pass through a canonical intermediate
+representation, and exit as either transformed coordinates, render-ready
+geometry, or binary-serialized bytes.</p>
+<h2 id="layer-diagram"><a class="header" href="#layer-diagram">Layer diagram</a></h2>
+<pre><code>                          ┌─────────────┐
+  PDB ──►┐               │   Coords    │               ┌──► Binary COORDS
+  CIF ──►├─► adapters ──►│ (canonical) ├──► ops ───────►├──► PDB string
+ BCIF ──►├─►             │  + Entity   │   transform    ├──► RenderCoords
+  DCD ──►┘               │  classify   │   validate     └──► AtomArray (Py)
+                          └──────┬──────┘   align
+                                 │
+                                 ▼
+                          secondary_structure
+                          (DSSP → SSType[])
+</code></pre>
+<h2 id="core-types"><a class="header" href="#core-types">Core types</a></h2>
+<h3 id="coords"><a class="header" href="#coords"><code>Coords</code></a></h3>
+<p>The canonical atom-level representation. Flat parallel arrays:</p>
+<pre><code class="language-rust ignore">pub struct Coords {
+    pub num_atoms: usize,
+    pub atoms: Vec&lt;CoordsAtom&gt;,      // x, y, z, occupancy, b_factor
+    pub chain_ids: Vec&lt;u8&gt;,
+    pub res_names: Vec&lt;[u8; 3]&gt;,
+    pub res_nums: Vec&lt;i32&gt;,
+    pub atom_names: Vec&lt;[u8; 4]&gt;,
+    pub elements: Vec&lt;Element&gt;,
+}</code></pre>
+<p>Flat arrays make iteration, slicing, and binary serialization cheap.
+The tradeoff is no hierarchical chain→residue→atom tree — use
+<code>MoleculeEntity</code> when you need entity-level grouping.</p>
+<h3 id="moleculeentity"><a class="header" href="#moleculeentity"><code>MoleculeEntity</code></a></h3>
+<p>A classified molecule with its coordinates:</p>
+<pre><code class="language-rust ignore">pub struct MoleculeEntity {
+    pub entity_id: u32,
+    pub molecule_type: MoleculeType,  // Protein, DNA, RNA, Ligand, ...
+    pub kind: EntityKind,             // Polymer or AtomSet
+}</code></pre>
+<p><code>split_into_entities()</code> classifies residues by name and groups them
+into entities. This is the primary input to viso’s rendering engine.</p>
+<h3 id="rendercoords"><a class="header" href="#rendercoords"><code>RenderCoords</code></a></h3>
+<p>Extracted backbone chains (N-CA-C triples) and sidechain atoms with
+bond connectivity. Bridge between <code>Coords</code> and GPU renderers.</p>
+<h2 id="module-responsibilities"><a class="header" href="#module-responsibilities">Module responsibilities</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Module</th><th>Responsibility</th></tr>
+</thead>
+<tbody>
+<tr><td><code>types</code></td><td><code>Coords</code>, <code>MoleculeEntity</code>, <code>DensityMap</code>, binary serialization</td></tr>
+<tr><td><code>adapters</code></td><td>Format I/O: PDB, mmCIF, BinaryCIF, DCD, MRC, AtomWorks</td></tr>
+<tr><td><code>cif</code></td><td>Low-level CIF/STAR parser with typed extractors</td></tr>
+<tr><td><code>ops</code></td><td>Coordinate transforms, Kabsch alignment, bond inference, validation</td></tr>
+<tr><td><code>render</code></td><td>Backbone/sidechain extraction, sequence extraction</td></tr>
+<tr><td><code>secondary_structure</code></td><td>DSSP algorithm, SS type classification</td></tr>
+<tr><td><code>ffi</code></td><td><code>extern "C"</code> functions for C/C++ integration</td></tr>
+<tr><td><code>python</code></td><td>PyO3 bindings (feature-gated)</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="binary-formats"><a class="header" href="#binary-formats">Binary formats</a></h2>
+<p>molconv defines two compact binary formats for IPC:</p>
+<ul>
+<li><strong>COORDS01</strong> — single molecule: magic + atom data (26 bytes/atom)</li>
+<li><strong>ASSEM01</strong> — multi-entity assembly: magic + entity headers + atom data</li>
+</ul>
+<p>Both use big-endian encoding and are designed for zero-overhead
+round-tripping between Rust and C++ backends.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="data-flow"><a class="header" href="#data-flow">Data Flow</a></h1>
+<p>This page traces the typical lifecycle of molecular data through
+molconv, from file input to render-ready output.</p>
+<h2 id="1-parsing"><a class="header" href="#1-parsing">1. Parsing</a></h2>
+<p>Every supported format has a dedicated adapter that produces <code>Coords</code>:</p>
+<pre><code>PDB file  → adapters::pdb::pdb_to_coords()       → Vec&lt;u8&gt; (COORDS01)
+CIF file  → adapters::pdb::mmcif_to_coords()      → Vec&lt;u8&gt; (COORDS01)
+BCIF file → adapters::bcif::bcif_to_coords()       → Vec&lt;u8&gt; (COORDS01)
+DCD file  → adapters::dcd::dcd_file_to_frames()    → Vec&lt;DcdFrame&gt;
+MRC file  → adapters::mrc::mrc_to_density()        → DensityMap
+</code></pre>
+<p>The binary <code>Vec&lt;u8&gt;</code> is the COORDS01 format. Deserialize it to get
+the <code>Coords</code> struct:</p>
+<pre><code class="language-rust ignore">let coords = molconv::types::coords::deserialize(&amp;bytes)?;</code></pre>
+<h2 id="2-entity-classification"><a class="header" href="#2-entity-classification">2. Entity classification</a></h2>
+<pre><code class="language-rust ignore">let entities = molconv::types::entity::split_into_entities(&amp;coords);
+// entities: Vec&lt;MoleculeEntity&gt;
+// Each entity has: entity_id, molecule_type, kind (Polymer or AtomSet)</code></pre>
+<p>Classification is based on residue name lookup — standard amino acids
+become <code>Protein</code>, nucleotides become <code>DNA</code>/<code>RNA</code>, <code>HOH</code> becomes
+<code>Water</code>, and everything else is classified as <code>Ligand</code>, <code>Ion</code>,
+<code>Cofactor</code>, etc.</p>
+<h2 id="3-transforms"><a class="header" href="#3-transforms">3. Transforms</a></h2>
+<p>The <code>ops::transform</code> module provides coordinate manipulation:</p>
+<pre><code class="language-rust ignore">// Filter to protein-only atoms
+let protein = ops::transform::protein_only(&amp;coords);
+
+// Kabsch superposition onto a reference
+let (aligned, rmsd) = ops::transform::kabsch_alignment(&amp;mobile, &amp;target);
+
+// Extract backbone chains as Vec&lt;Vec3&gt; (N-CA-C triples)
+let chains = ops::transform::extract_backbone_chains(&amp;coords);</code></pre>
+<h2 id="4-secondary-structure"><a class="header" href="#4-secondary-structure">4. Secondary structure</a></h2>
+<p>DSSP classification from backbone geometry:</p>
+<pre><code class="language-rust ignore">let ss_types: Vec&lt;SSType&gt; = secondary_structure::dssp::from_entity(&amp;entity);
+// SSType::Helix, SSType::Sheet, SSType::Coil, SSType::Turn</code></pre>
+<h2 id="5-render-extraction"><a class="header" href="#5-render-extraction">5. Render extraction</a></h2>
+<p><code>RenderCoords</code> splits atoms into backbone and sidechain data suitable
+for GPU rendering:</p>
+<pre><code class="language-rust ignore">let render = RenderCoords::from_entity(&amp;entity, is_hydrophobic, get_bonds);
+// render.backbone_chains: Vec&lt;Vec&lt;Vec3&gt;&gt;  (N-CA-C per chain)
+// render.sidechain_atoms: Vec&lt;RenderSidechainAtom&gt;
+// render.sidechain_bonds: Vec&lt;(u32, u32)&gt;</code></pre>
+<h2 id="6-serialization"><a class="header" href="#6-serialization">6. Serialization</a></h2>
+<p>For IPC with C++ backends or storage:</p>
+<pre><code class="language-rust ignore">// Single molecule
+let bytes = molconv::types::coords::serialize(&amp;coords)?;
+
+// Multi-entity assembly
+let bytes = molconv::types::coords::serialize_assembly(&amp;entities)?;</code></pre>
+<h2 id="pipeline-summary"><a class="header" href="#pipeline-summary">Pipeline summary</a></h2>
+<pre><code>File → Adapter → Coords → split_into_entities → MoleculeEntity[]
+                    │                                   │
+                    ├──► ops::transform (align, filter)  │
+                    ├──► ops::validation (completeness)  │
+                    └──► serialize (binary IPC)          │
+                                                        ▼
+                                            secondary_structure::dssp
+                                                        │
+                                                        ▼
+                                              RenderCoords::from_entity
+                                              (backbone + sidechain data)
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="types--core-data-structures"><a class="header" href="#types--core-data-structures">Types — Core Data Structures</a></h1>
+<p>The <code>types</code> module contains molconv’s canonical data representations.</p>
+<h2 id="typescoords--atom-level-data"><a class="header" href="#typescoords--atom-level-data"><code>types::coords</code> — Atom-Level Data</a></h2>
+<h3 id="coords-1"><a class="header" href="#coords-1"><code>Coords</code></a></h3>
+<p>Flat parallel arrays representing atoms in a molecular structure.
+Every atom has a position (<code>CoordsAtom</code>), chain ID, residue name,
+residue number, atom name, and element type.</p>
+<p>This is the lowest-level representation — no hierarchy, no
+classification. Use <code>split_into_entities()</code> to get grouped molecules.</p>
+<h3 id="coordsatom"><a class="header" href="#coordsatom"><code>CoordsAtom</code></a></h3>
+<pre><code class="language-rust ignore">pub struct CoordsAtom {
+    pub x: f32, pub y: f32, pub z: f32,
+    pub occupancy: f32,
+    pub b_factor: f32,
+}</code></pre>
+<h3 id="element"><a class="header" href="#element"><code>Element</code></a></h3>
+<p>Chemical element enum with methods for covalent radius, VDW radius,
+and CPK color. Supports lookup by symbol or by atom name heuristics.</p>
+<h3 id="binary-serialization"><a class="header" href="#binary-serialization">Binary serialization</a></h3>
+<ul>
+<li><code>serialize(&amp;coords) → Vec&lt;u8&gt;</code> — COORDS01 format (26 bytes/atom)</li>
+<li><code>deserialize(&amp;bytes) → Coords</code> — inverse</li>
+<li><code>serialize_assembly(&amp;entities) → Vec&lt;u8&gt;</code> — ASSEM01 multi-entity format</li>
+<li><code>deserialize_assembly(&amp;bytes) → Vec&lt;MoleculeEntity&gt;</code> — inverse</li>
+</ul>
+<h2 id="typesentity--molecule-classification"><a class="header" href="#typesentity--molecule-classification"><code>types::entity</code> — Molecule Classification</a></h2>
+<h3 id="moleculeentity-1"><a class="header" href="#moleculeentity-1"><code>MoleculeEntity</code></a></h3>
+<p>A classified molecule with its atom data:</p>
+<ul>
+<li><code>entity_id: u32</code> — unique identifier</li>
+<li><code>molecule_type: MoleculeType</code> — Protein, DNA, RNA, Ligand, Ion, etc.</li>
+<li><code>kind: EntityKind</code> — <code>Polymer(PolymerData)</code> or <code>AtomSet(AtomSet)</code></li>
+</ul>
+<h3 id="moleculetype"><a class="header" href="#moleculetype"><code>MoleculeType</code></a></h3>
+<pre><code class="language-rust ignore">pub enum MoleculeType {
+    Protein, DNA, RNA, Ligand, Ion, Water, Lipid, Cofactor, Solvent,
+}</code></pre>
+<h3 id="key-functions"><a class="header" href="#key-functions">Key functions</a></h3>
+<ul>
+<li><code>split_into_entities(&amp;coords) → Vec&lt;MoleculeEntity&gt;</code> — classify and group</li>
+<li><code>merge_entities(&amp;[MoleculeEntity]) → Coords</code> — flatten back to atoms</li>
+<li><code>classify_residue(name) → MoleculeType</code> — single residue lookup</li>
+</ul>
+<h2 id="typesdensity--electron-density"><a class="header" href="#typesdensity--electron-density"><code>types::density</code> — Electron Density</a></h2>
+<h3 id="densitymap"><a class="header" href="#densitymap"><code>DensityMap</code></a></h3>
+<p>3D grid of electron density values from MRC/CCP4 files:</p>
+<ul>
+<li>Grid dimensions, cell parameters, origin</li>
+<li><code>f32</code> voxel data</li>
+<li>Methods for coordinate-to-grid mapping</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="adapters--format-io"><a class="header" href="#adapters--format-io">Adapters — Format I/O</a></h1>
+<p>The <code>adapters</code> module provides parsers and serializers for common
+molecular structure file formats.</p>
+<h2 id="pdb--mmcif-adapterspdb"><a class="header" href="#pdb--mmcif-adapterspdb">PDB / mmCIF (<code>adapters::pdb</code>)</a></h2>
+<p>The primary entry point for structure files:</p>
+<pre><code class="language-rust ignore">// Auto-detect format from extension
+let coords = structure_file_to_coords("path/to/file.pdb")?;
+
+// Explicit format
+let bytes = pdb_to_coords(pdb_string)?;      // PDB → COORDS01 bytes
+let bytes = mmcif_to_coords(cif_string)?;     // mmCIF → COORDS01 bytes
+let pdb = coords_to_pdb(&amp;coords_bytes)?;      // COORDS01 → PDB string</code></pre>
+<p>Backed by the <code>pdbtbx</code> crate for robust PDB/mmCIF parsing.</p>
+<h2 id="binarycif-adaptersbcif"><a class="header" href="#binarycif-adaptersbcif">BinaryCIF (<code>adapters::bcif</code>)</a></h2>
+<p>RCSB’s compressed binary CIF format. Handles gzip-compressed files
+automatically.</p>
+<pre><code class="language-rust ignore">let bytes = bcif_to_coords(&amp;bcif_bytes)?;
+let bytes = bcif_file_to_coords("path/to/file.bcif")?;</code></pre>
+<h2 id="dcd-trajectories-adaptersdcd"><a class="header" href="#dcd-trajectories-adaptersdcd">DCD Trajectories (<code>adapters::dcd</code>)</a></h2>
+<p>CHARMM/NAMD trajectory format — a sequence of coordinate frames
+sharing the same topology.</p>
+<pre><code class="language-rust ignore">let frames: Vec&lt;DcdFrame&gt; = dcd_file_to_frames("trajectory.dcd")?;
+// Each frame: Vec&lt;f32&gt; positions (x,y,z interleaved)</code></pre>
+<p>Also provides streaming via <code>DcdReader</code> for large trajectories.</p>
+<h2 id="mrc--ccp4-density-adaptersmrc"><a class="header" href="#mrc--ccp4-density-adaptersmrc">MRC / CCP4 Density (<code>adapters::mrc</code>)</a></h2>
+<p>Electron density maps:</p>
+<pre><code class="language-rust ignore">let density = mrc_to_density(&amp;bytes)?;
+let density = mrc_file_to_density("map.mrc")?;
+// density: DensityMap with 3D grid + cell parameters</code></pre>
+<h2 id="atomworks-adaptersatomworks"><a class="header" href="#atomworks-adaptersatomworks">AtomWorks (<code>adapters::atomworks</code>)</a></h2>
+<p>Bidirectional conversion between molconv entities and Biotite
+<code>AtomArray</code> objects (via PyO3). Used by ML model pipelines
+(RF3, RFdiffusion3, LigandMPNN).</p>
+<pre><code class="language-python">import molconv
+
+# molconv → AtomArray (for model inference)
+atom_array = molconv.entities_to_atom_array(assembly_bytes)
+
+# AtomArray → molconv (after prediction)
+assembly_bytes = molconv.atom_array_to_entities(atom_array)
+</code></pre>
+<p>Feature-gated behind <code>python</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cif-parser"><a class="header" href="#cif-parser">CIF Parser</a></h1>
+<p>The <code>cif</code> module is a standalone CIF/STAR parser with typed data
+extraction. It operates in two layers.</p>
+<h2 id="layer-1--dom-parsing-cifparse"><a class="header" href="#layer-1--dom-parsing-cifparse">Layer 1 — DOM parsing (<code>cif::parse</code>)</a></h2>
+<pre><code class="language-rust ignore">let doc = molconv::cif::parse(input)?;</code></pre>
+<p>Parses any CIF or STAR file into an untyped <code>Document</code> tree:</p>
+<ul>
+<li><code>Document</code> contains <code>Vec&lt;Block&gt;</code></li>
+<li>Each <code>Block</code> has <code>name</code>, <code>categories</code> (loop tables), and <code>pairs</code>
+(key-value entries)</li>
+<li><code>Category</code> holds <code>Column</code> data (string values, one per row)</li>
+</ul>
+<p>This layer makes no assumptions about the content — it works for
+mmCIF, CCD, reflection data, or any STAR-format file.</p>
+<h2 id="layer-2--typed-extractors-cifextract"><a class="header" href="#layer-2--typed-extractors-cifextract">Layer 2 — Typed extractors (<code>cif::extract</code>)</a></h2>
+<p>Pull structured data from a parsed <code>Block</code>:</p>
+<pre><code class="language-rust ignore">use molconv::cif::extract::{CoordinateData, CifContent};
+
+// Caller knows the content type:
+let coords = CoordinateData::try_from(&amp;block)?;
+
+// Or auto-detect:
+match CifContent::try_from(&amp;block)? {
+    CifContent::Coordinates(data) =&gt; { /* atom_site data */ },
+    CifContent::Reflections(data) =&gt; { /* refln data */ },
+    CifContent::Dictionary(data)  =&gt; { /* CCD entry */ },
+}</code></pre>
+<h3 id="coordinatedata"><a class="header" href="#coordinatedata"><code>CoordinateData</code></a></h3>
+<p>Extracted from <code>_atom_site</code> loops:</p>
+<ul>
+<li>Atom positions, names, elements, B-factors, occupancy</li>
+<li>Chain IDs, residue names, residue numbers</li>
+<li>Entity ID and molecule type annotations</li>
+<li>Cell parameters and space group (if present)</li>
+</ul>
+<h3 id="reflectiondata"><a class="header" href="#reflectiondata"><code>ReflectionData</code></a></h3>
+<p>Extracted from <code>_refln</code> loops (X-ray diffraction data).</p>
+<h3 id="dictionaryentry"><a class="header" href="#dictionaryentry"><code>DictionaryEntry</code></a></h3>
+<p>Extracted from CCD (Chemical Component Dictionary) entries — ideal
+coordinates, bond tables, and chemical metadata.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ops--transforms-and-analysis"><a class="header" href="#ops--transforms-and-analysis">Ops — Transforms and Analysis</a></h1>
+<p>The <code>ops</code> module provides coordinate manipulation, structural
+validation, and bond inference.</p>
+<h2 id="opstransform--coordinate-operations"><a class="header" href="#opstransform--coordinate-operations"><code>ops::transform</code> — Coordinate Operations</a></h2>
+<h3 id="filtering"><a class="header" href="#filtering">Filtering</a></h3>
+<pre><code class="language-rust ignore">// Keep only standard amino acid atoms
+let protein = protein_only(&amp;coords);
+
+// Keep only backbone atoms (N, CA, C)
+let backbone = backbone_only(&amp;coords);
+
+// Keep only heavy atoms (non-hydrogen)
+let heavy = heavy_atoms_only(&amp;coords);
+
+// Filter by residue name predicate
+let filtered = filter_residues(&amp;coords, |name| name == "ALA");</code></pre>
+<h3 id="backbone-extraction"><a class="header" href="#backbone-extraction">Backbone extraction</a></h3>
+<pre><code class="language-rust ignore">// Extract CA chains as Vec&lt;Vec&lt;Vec3&gt;&gt;
+let chains = extract_backbone_chains(&amp;coords);
+
+// Get all CA positions as flat Vec&lt;Vec3&gt;
+let cas = extract_ca_positions(&amp;coords);</code></pre>
+<h3 id="alignment"><a class="header" href="#alignment">Alignment</a></h3>
+<p>Kabsch algorithm for optimal rigid-body superposition:</p>
+<pre><code class="language-rust ignore">let (aligned, rmsd) = kabsch_alignment(&amp;mobile, &amp;reference);
+
+// With uniform scaling
+let (aligned, rmsd) = kabsch_alignment_with_scale(&amp;mobile, &amp;reference);
+
+// Binary COORDS alignment (convenience wrapper)
+let aligned_bytes = align_coords_bytes(&amp;mobile_bytes, &amp;reference_bytes)?;</code></pre>
+<h3 id="interpolation"><a class="header" href="#interpolation">Interpolation</a></h3>
+<p>Smooth coordinate transitions for animation:</p>
+<pre><code class="language-rust ignore">let interpolated = interpolate_coords(&amp;start, &amp;end, t);  // t in [0, 1]
+
+// Collapse-expand: shrink to centroid then expand to target
+let interp = interpolate_coords_collapse(&amp;start, &amp;end, t);</code></pre>
+<h3 id="atom-lookup"><a class="header" href="#atom-lookup">Atom lookup</a></h3>
+<pre><code class="language-rust ignore">let pos = get_atom_position(&amp;coords, chain_id, res_num, "CA");
+let (pos, name) = get_closest_atom_for_residue(&amp;coords, chain, res, point);</code></pre>
+<h2 id="opsvalidation--completeness-checks"><a class="header" href="#opsvalidation--completeness-checks"><code>ops::validation</code> — Completeness Checks</a></h2>
+<pre><code class="language-rust ignore">let report = completeness_report(&amp;coords);
+let has_bb = has_complete_backbone(&amp;coords);
+let counts: AtomCounts = atom_counts(&amp;coords);</code></pre>
+<h2 id="opsbond_inference--distance-based-bonds"><a class="header" href="#opsbond_inference--distance-based-bonds"><code>ops::bond_inference</code> — Distance-Based Bonds</a></h2>
+<p>Infer covalent bonds from interatomic distances using element-specific
+covalent radii:</p>
+<pre><code class="language-rust ignore">let bonds: Vec&lt;InferredBond&gt; = infer_bonds(&amp;coords, DEFAULT_TOLERANCE);
+// InferredBond { atom_a, atom_b, order: BondOrder }</code></pre>
+<p>Used as a fallback for ligands and cofactors that lack explicit bond
+tables.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="render--visualization-data"><a class="header" href="#render--visualization-data">Render — Visualization Data</a></h1>
+<p>The <code>render</code> module extracts GPU-ready data from <code>Coords</code> and
+<code>MoleculeEntity</code> values. It serves as the bridge between molconv’s
+canonical types and rendering engines like viso.</p>
+<h2 id="rendercoords-1"><a class="header" href="#rendercoords-1"><code>RenderCoords</code></a></h2>
+<p>The primary output type, containing separated backbone and sidechain
+data with bond connectivity:</p>
+<pre><code class="language-rust ignore">let render = RenderCoords::from_entity(&amp;entity, is_hydrophobic, get_bonds);</code></pre>
+<h3 id="fields"><a class="header" href="#fields">Fields</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>backbone_chains</code></td><td><code>Vec&lt;Vec&lt;Vec3&gt;&gt;</code></td><td>N-CA-C position triples per chain</td></tr>
+<tr><td><code>backbone_chain_ids</code></td><td><code>Vec&lt;u8&gt;</code></td><td>Chain ID for each backbone chain</td></tr>
+<tr><td><code>backbone_residue_chains</code></td><td><code>Vec&lt;Vec&lt;RenderBackboneResidue&gt;&gt;</code></td><td>Full N/CA/C/O per residue</td></tr>
+<tr><td><code>sidechain_atoms</code></td><td><code>Vec&lt;RenderSidechainAtom&gt;</code></td><td>Non-backbone heavy atoms</td></tr>
+<tr><td><code>sidechain_bonds</code></td><td><code>Vec&lt;(u32, u32)&gt;</code></td><td>Sidechain bond pairs (indices into <code>sidechain_atoms</code>)</td></tr>
+<tr><td><code>backbone_sidechain_bonds</code></td><td><code>Vec&lt;(Vec3, u32)&gt;</code></td><td>CA→CB connections</td></tr>
+<tr><td><code>all_positions</code></td><td><code>Vec&lt;Vec3&gt;</code></td><td>Every atom position (for bounding box, picking)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="construction-methods"><a class="header" href="#construction-methods">Construction methods</a></h3>
+<ul>
+<li><code>from_entity()</code> — from a <code>MoleculeEntity</code> with topology callbacks</li>
+<li><code>from_coords_with_topology()</code> — from raw <code>Coords</code> with callbacks</li>
+<li><code>from_coords()</code> — minimal extraction (no bonds or hydrophobicity)</li>
+</ul>
+<h3 id="queries"><a class="header" href="#queries">Queries</a></h3>
+<pre><code class="language-rust ignore">render.get_atom_position(residue_idx, "CB")  // Option&lt;Vec3&gt;
+render.find_closest_atom(residue_idx, point) // Option&lt;(Vec3, String)&gt;
+render.ca_positions()                        // Vec&lt;Vec3&gt;
+render.residue_count()                       // usize</code></pre>
+<h2 id="renderbackbone"><a class="header" href="#renderbackbone"><code>render::backbone</code></a></h2>
+<p>Backbone-specific extraction from <code>MoleculeEntity</code>:</p>
+<ul>
+<li><code>BackboneData</code> — chains as flat CA arrays + chain IDs</li>
+<li><code>ca_positions_from_chains()</code> — extract CA positions from N-CA-C chains</li>
+</ul>
+<h2 id="rendersidechain"><a class="header" href="#rendersidechain"><code>render::sidechain</code></a></h2>
+<p>Sidechain extraction with bond topology:</p>
+<ul>
+<li><code>SidechainAtoms</code> — atom positions, names, bonds, hydrophobicity</li>
+<li><code>SidechainAtomData</code> — per-atom data struct</li>
+</ul>
+<h2 id="extract_sequences"><a class="header" href="#extract_sequences"><code>extract_sequences()</code></a></h2>
+<p>Extract amino acid sequences from <code>Coords</code>:</p>
+<pre><code class="language-rust ignore">let (full_sequence, chain_sequences) = extract_sequences(&amp;coords);
+// full_sequence: "MQIFVKTL..."
+// chain_sequences: vec![(b'A', "MQIFVKTL..."), (b'B', "...")]</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="secondary-structure"><a class="header" href="#secondary-structure">Secondary Structure</a></h1>
+<p>The <code>secondary_structure</code> module classifies protein residues into
+helix, sheet, coil, and turn based on backbone geometry.</p>
+<h2 id="sstype"><a class="header" href="#sstype"><code>SSType</code></a></h2>
+<pre><code class="language-rust ignore">pub enum SSType {
+    Helix,   // alpha-helix (H)
+    Sheet,   // beta-strand (E)
+    Coil,    // unstructured (C)
+    Turn,    // hydrogen-bonded turn (T)
+}</code></pre>
+<p>Implements <code>From&lt;char&gt;</code> for Q8-style single-letter codes and
+<code>Display</code> for the reverse mapping.</p>
+<h2 id="dssp-algorithm-dssp-submodule"><a class="header" href="#dssp-algorithm-dssp-submodule">DSSP algorithm (<code>dssp</code> submodule)</a></h2>
+<p>The primary classification method. Computes hydrogen bond energies
+from backbone N-H…O=C geometry and assigns secondary structure
+based on the standard DSSP criteria.</p>
+<pre><code class="language-rust ignore">use molconv::secondary_structure::dssp;
+
+// From a MoleculeEntity
+let ss: Vec&lt;SSType&gt; = dssp::from_entity(&amp;entity);
+
+// From a Q8 string (e.g., from PDB HELIX/SHEET records)
+let ss: Vec&lt;SSType&gt; = dssp::from_string("HHHHCCCEEEECCC");</code></pre>
+<h2 id="auto-detection-auto-submodule"><a class="header" href="#auto-detection-auto-submodule">Auto-detection (<code>auto</code> submodule)</a></h2>
+<p>Fallback method using dihedral angle (phi/psi) ranges when full
+DSSP is not needed:</p>
+<pre><code class="language-rust ignore">use molconv::secondary_structure::auto::detect;
+
+let ss: Vec&lt;SSType&gt; = detect(&amp;backbone_residues);</code></pre>
+<h2 id="resolution-and-override"><a class="header" href="#resolution-and-override">Resolution and override</a></h2>
+<p>The <code>resolve()</code> function merges DSSP output with optional per-entity
+Q8 overrides:</p>
+<pre><code class="language-rust ignore">use molconv::secondary_structure::{resolve, DetectionInput};
+
+let input = DetectionInput { entity, override_q8: Some("HHHCCCEEE") };
+let ss = resolve(&amp;input);</code></pre>
+<p>This is the entry point used by viso’s scene metadata pipeline.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ffi--c-bindings"><a class="header" href="#ffi--c-bindings">FFI — C Bindings</a></h1>
+<p>The <code>ffi</code> module provides <code>extern "C"</code> functions for integration with
+C and C++ applications. These are re-exported by <code>foldit-runner</code> for
+inclusion in its generated C header.</p>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<h3 id="coords_from_backbone"><a class="header" href="#coords_from_backbone"><code>coords_from_backbone</code></a></h3>
+<pre><code class="language-c">CoordsResult coords_from_backbone(
+    const float* positions,  // [x,y,z] × n_atoms
+    uint32_t n_atoms,
+    const uint8_t* chain_ids,
+    const int32_t* res_nums,
+    const char (*res_names)[4],  // 3-letter codes, null-padded
+    const char (*atom_names)[5]  // 4-letter codes, null-padded
+);
+</code></pre>
+<p>Constructs COORDS01 bytes from raw arrays. Returns a <code>CoordsResult</code>
+containing either serialized bytes or an error string.</p>
+<h3 id="coords_free_result"><a class="header" href="#coords_free_result"><code>coords_free_result</code></a></h3>
+<p>Free memory allocated by <code>coords_from_backbone</code>.</p>
+<h3 id="coords_free_string"><a class="header" href="#coords_free_string"><code>coords_free_string</code></a></h3>
+<p>Free an error string from a <code>CoordsResult</code>.</p>
+<h2 id="coordsresult"><a class="header" href="#coordsresult"><code>CoordsResult</code></a></h2>
+<pre><code class="language-c">typedef struct {
+    const uint8_t* data;   // COORDS01 bytes (null on error)
+    uint32_t len;          // byte length
+    const char* error;     // error message (null on success)
+} CoordsResult;
+</code></pre>
+<h2 id="usage-from-c"><a class="header" href="#usage-from-c">Usage from C++</a></h2>
+<pre><code class="language-cpp">#include "molconv.h"
+
+auto result = coords_from_backbone(
+    positions.data(), n_atoms,
+    chain_ids.data(), res_nums.data(),
+    res_names.data(), atom_names.data()
+);
+
+if (result.error) {
+    fprintf(stderr, "Error: %s\n", result.error);
+    coords_free_string(result.error);
+} else {
+    // Use result.data[0..result.len]
+    coords_free_result(result);
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="python-bindings"><a class="header" href="#python-bindings">Python Bindings</a></h1>
+<p>molconv provides Python bindings via PyO3, enabled with the <code>python</code>
+feature flag. The module is built with maturin.</p>
+<h2 id="installation-1"><a class="header" href="#installation-1">Installation</a></h2>
+<pre><code class="language-bash">cd crates/molconv
+maturin develop --release --features python
+</code></pre>
+<h2 id="core-functions"><a class="header" href="#core-functions">Core functions</a></h2>
+<h3 id="pdb_to_coordspdb_string--bytes"><a class="header" href="#pdb_to_coordspdb_string--bytes"><code>pdb_to_coords(pdb_string) → bytes</code></a></h3>
+<p>Parse a PDB string and return COORDS01 binary bytes.</p>
+<h3 id="mmcif_to_coordscif_string--bytes"><a class="header" href="#mmcif_to_coordscif_string--bytes"><code>mmcif_to_coords(cif_string) → bytes</code></a></h3>
+<p>Parse an mmCIF string and return COORDS01 binary bytes.</p>
+<h3 id="coords_to_pdbcoords_bytes--str"><a class="header" href="#coords_to_pdbcoords_bytes--str"><code>coords_to_pdb(coords_bytes) → str</code></a></h3>
+<p>Convert COORDS01 bytes back to a PDB-format string.</p>
+<h3 id="deserialize_coordscoords_bytes--dict"><a class="header" href="#deserialize_coordscoords_bytes--dict"><code>deserialize_coords(coords_bytes) → dict</code></a></h3>
+<p>Deserialize COORDS01 bytes into a Python dictionary with NumPy arrays:</p>
+<pre><code class="language-python">result = molconv.deserialize_coords(coords_bytes)
+# result["num_atoms"]: int
+# result["x"], result["y"], result["z"]: np.ndarray[f32]
+</code></pre>
+<h2 id="atomworks-adapters"><a class="header" href="#atomworks-adapters">AtomWorks adapters</a></h2>
+<p>For ML model pipelines that use Biotite <code>AtomArray</code> objects:</p>
+<h3 id="entities_to_atom_arrayassembly_bytes--atomarray"><a class="header" href="#entities_to_atom_arrayassembly_bytes--atomarray"><code>entities_to_atom_array(assembly_bytes) → AtomArray</code></a></h3>
+<p>Convert ASSEM01 bytes to a Biotite AtomArray with standard and
+AtomWorks-specific annotations (entity_id, mol_type, chain_type).</p>
+<h3 id="entities_to_atom_array_plusassembly_bytes--atomarray"><a class="header" href="#entities_to_atom_array_plusassembly_bytes--atomarray"><code>entities_to_atom_array_plus(assembly_bytes) → AtomArray</code></a></h3>
+<p>Like <code>entities_to_atom_array</code> but also populates bonds via distance
+inference.</p>
+<h3 id="atom_array_to_entitiesatom_array--bytes"><a class="header" href="#atom_array_to_entitiesatom_array--bytes"><code>atom_array_to_entities(atom_array) → bytes</code></a></h3>
+<p>Convert a Biotite AtomArray back to ASSEM01 bytes.</p>
+<h3 id="entities_to_atom_array_parsedassembly_bytes-filename--atomarray"><a class="header" href="#entities_to_atom_array_parsedassembly_bytes-filename--atomarray"><code>entities_to_atom_array_parsed(assembly_bytes, filename) → AtomArray</code></a></h3>
+<p>Convert via the full AtomWorks cleaning pipeline (leaving group
+removal, charge correction, missing atom imputation).</p>
+<h3 id="parse_file_to_entitiespath--bytes"><a class="header" href="#parse_file_to_entitiespath--bytes"><code>parse_file_to_entities(path) → bytes</code></a></h3>
+<p>Parse a structure file (PDB/mmCIF) directly to ASSEM01 bytes.</p>
+<h3 id="parse_file_fullpath--atomarray"><a class="header" href="#parse_file_fullpath--atomarray"><code>parse_file_full(path) → AtomArray</code></a></h3>
+<p>Parse a structure file through the full AtomWorks pipeline.</p>
+<h3 id="coords_to_atom_arraycoords_bytes--atomarray"><a class="header" href="#coords_to_atom_arraycoords_bytes--atomarray"><code>coords_to_atom_array(coords_bytes) → AtomArray</code></a></h3>
+<p>Convert single-molecule COORDS01 bytes to AtomArray.</p>
+<h3 id="coords_to_atom_array_pluscoords_bytes--atomarray"><a class="header" href="#coords_to_atom_array_pluscoords_bytes--atomarray"><code>coords_to_atom_array_plus(coords_bytes) → AtomArray</code></a></h3>
+<p>Like <code>coords_to_atom_array</code> with bond inference.</p>
+<h3 id="atom_array_to_coordsatom_array--bytes"><a class="header" href="#atom_array_to_coordsatom_array--bytes"><code>atom_array_to_coords(atom_array) → bytes</code></a></h3>
+<p>Convert AtomArray to single-molecule COORDS01 bytes.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

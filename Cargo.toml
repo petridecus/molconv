@@ -1,0 +1,74 @@
+[package]
+name = "molconv"
+version = "0.1.0"
+edition = "2021"
+authors = ["Andreas Petrides"]
+description = "Coordinate format conversion library for molecular structures"
+license = "MIT"
+repository = "https://github.com/petridecus/molconv"
+readme = "README.md"
+keywords = ["protein", "molecular", "pdb", "mmcif", "structure"]
+categories = ["science", "parser-implementations", "data-structures"]
+
+[lib]
+name = "molconv"
+crate-type = ["rlib"]
+
+[dependencies]
+pyo3 = { version = "0.27", features = ["extension-module"], optional = true }
+numpy = { version = "0.27", optional = true }
+ndarray = "0.15"
+pdbtbx = "0.12"
+thiserror = "1.0"
+glam = "0.30"
+log = "0.4"
+rmp = "0.8"
+flate2 = "1"
+
+[features]
+default = []
+python = ["dep:pyo3", "dep:numpy"]
+
+[package.metadata.cargo-machete]
+ignored = ["numpy"]
+
+[lints.clippy]
+# Broad lint groups (lower priority so individual lints can override)
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+cargo = { level = "deny", priority = -1 }
+# Restriction lints (opt-in, not covered by the groups above)
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+print_stderr = "deny"
+str_to_string = "deny"
+
+# Multiple crate versions: transitive deps — not actionable
+multiple_crate_versions = "allow"
+
+# Pedantic allowances
+missing_const_for_fn = "allow"
+default_trait_access = "allow"
+doc_markdown = "allow"
+similar_names = "allow"
+items_after_statements = "allow"
+use_self = "allow"
+redundant_pub_crate = "allow"
+
+[lints.rust]
+missing_docs = "deny"
+unused_results = "deny"
+unused_qualifications = "deny"
+trivial_casts = "deny"
+trivial_numeric_casts = "deny"
+
+[lints.rustdoc]
+broken_intra_doc_links = "deny"
+private_intra_doc_links = "deny"
+bare_urls = "deny"
