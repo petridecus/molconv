@@ -204,9 +204,9 @@ fn voxel_size_and_grid_to_cartesian() {
     assert!((vs[2] - 10.0).abs() < 1e-6); // 40/4
 
     let pos = map.grid_to_cartesian(1, 2, 3);
-    assert!((pos[0] - 10.0).abs() < 1e-6);
-    assert!((pos[1] - 20.0).abs() < 1e-6);
-    assert!((pos[2] - 30.0).abs() < 1e-6);
+    assert!((pos[0] - 10.0).abs() < 1e-4, "x: got {}", pos[0]);
+    assert!((pos[1] - 20.0).abs() < 1e-4, "y: got {}", pos[1]);
+    assert!((pos[2] - 30.0).abs() < 1e-4, "z: got {}", pos[2]);
 }
 
 #[test]

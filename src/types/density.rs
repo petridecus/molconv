@@ -60,7 +60,6 @@ impl DensityMap {
     #[must_use]
     pub fn voxel_size(&self) -> [f32; 3] {
         #[allow(clippy::cast_precision_loss)]
-        // grid dimensions fit comfortably in f32
         [
             self.cell_dims[0] / self.mx as f32,
             self.cell_dims[1] / self.my as f32,
@@ -68,24 +67,93 @@ impl DensityMap {
         ]
     }
 
+    /// Build the 3x3 deorthogonalization matrix for converting
+    /// fractional unit cell coordinates to Cartesian Angstroms.
+    ///
+    /// For orthogonal cells (α=β=γ=90°) this is diagonal with (a,b,c).
+    /// For non-orthogonal cells (e.g. hexagonal γ=120°) the off-diagonal
+    /// terms rotate the fractional axes into Cartesian space.
+    #[must_use]
+    pub fn frac_to_cart_matrix(&self) -> [[f32; 3]; 3] {
+        let [a, b, c] = self.cell_dims;
+        let alpha = self.cell_angles[0].to_radians();
+        let beta = self.cell_angles[1].to_radians();
+        let gamma = self.cell_angles[2].to_radians();
+
+        let cos_a = alpha.cos();
+        let cos_b = beta.cos();
+        let cos_g = gamma.cos();
+        let sin_g = gamma.sin();
+
+        let xi = cos_b.mul_add(-cos_g, cos_a) / sin_g;
+        let sin_b = beta.sin();
+        let zeta = sin_b.mul_add(sin_b, -(xi * xi)).max(0.0).sqrt();
+
+        [
+            [a, b * cos_g, c * cos_b],
+            [0.0, b * sin_g, c * xi],
+            [0.0, 0.0, c * zeta],
+        ]
+    }
+
     /// Convert a grid index to Cartesian coordinates in Angstroms.
     ///
-    /// Accounts for both `origin` (MRC2014 words 50-52) and
-    /// `nxstart/nystart/nzstart`.
+    /// Converts grid indices to fractional unit cell coordinates, then
+    /// applies the deorthogonalization matrix to get Cartesian positions.
+    /// Accounts for `nxstart/nystart/nzstart` and `origin`.
     #[must_use]
+    #[allow(clippy::cast_precision_loss)]
     pub fn grid_to_cartesian(
         &self,
         ix: usize,
         iy: usize,
         iz: usize,
     ) -> [f32; 3] {
-        let vs = self.voxel_size();
-        #[allow(clippy::cast_precision_loss)]
-        // grid indices and start offsets fit in f32
+        self.grid_to_cartesian_f32(ix as f32, iy as f32, iz as f32)
+    }
+
+    /// Float-precision version of
+    /// [`grid_to_cartesian`](Self::grid_to_cartesian).
+    ///
+    /// Accepts fractional grid positions for sub-voxel interpolation
+    /// (e.g. from marching cubes edge interpolation).
+    #[must_use]
+    #[allow(clippy::cast_precision_loss)]
+    pub fn grid_to_cartesian_f32(&self, gx: f32, gy: f32, gz: f32) -> [f32; 3] {
+        let fx = (self.nxstart as f32 + gx) / self.mx as f32;
+        let fy = (self.nystart as f32 + gy) / self.my as f32;
+        let fz = (self.nzstart as f32 + gz) / self.mz as f32;
+
+        let m = self.frac_to_cart_matrix();
         [
-            (self.nxstart as f32 + ix as f32).mul_add(vs[0], self.origin[0]),
-            (self.nystart as f32 + iy as f32).mul_add(vs[1], self.origin[1]),
-            (self.nzstart as f32 + iz as f32).mul_add(vs[2], self.origin[2]),
+            m[0][0].mul_add(fx, m[0][1].mul_add(fy, m[0][2] * fz))
+                + self.origin[0],
+            m[1][1].mul_add(fy, m[1][2] * fz) + self.origin[1],
+            m[2][2].mul_add(fz, self.origin[2]),
+        ]
+    }
+
+    /// Convert Cartesian coordinates in Angstroms back to fractional
+    /// grid indices.
+    ///
+    /// Inverse of
+    /// [`grid_to_cartesian_f32`](Self::grid_to_cartesian_f32).
+    #[must_use]
+    #[allow(clippy::cast_precision_loss)]
+    pub fn cartesian_to_grid(&self, cart: [f32; 3]) -> [f32; 3] {
+        let cx = cart[0] - self.origin[0];
+        let cy = cart[1] - self.origin[1];
+        let cz = cart[2] - self.origin[2];
+
+        let m = self.frac_to_cart_matrix();
+        let fz = cz / m[2][2];
+        let fy = m[1][2].mul_add(-fz, cy) / m[1][1];
+        let fx = m[0][2].mul_add(-fz, m[0][1].mul_add(-fy, cx)) / m[0][0];
+
+        [
+            fx.mul_add(self.mx as f32, -(self.nxstart as f32)),
+            fy.mul_add(self.my as f32, -(self.nystart as f32)),
+            fz.mul_add(self.mz as f32, -(self.nzstart as f32)),
         ]
     }
 
